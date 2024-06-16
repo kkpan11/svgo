@@ -6,7 +6,7 @@ SVGO runs with a default preset that has the plugin ID `preset-default`. This is
 
 :::info
 
-If you aren't using SVGO directly, like through [SVGR](https://github.com/gregberge/svgr), the default plugins may be different from the default preset.
+If you aren't using SVGO directly, like through [SVGR](https://github.com/gregberge/svgr), the default plugins may differ from the default preset.
 
 :::
 
@@ -30,7 +30,6 @@ The following plugins are included in `preset-default`, in the order that they'r
 - [removeUnknownsAndDefaults](/docs/plugins/removeUnknownsAndDefaults/)
 - [removeNonInheritableGroupAttrs](/docs/plugins/removeNonInheritableGroupAttrs/)
 - [removeUselessStrokeAndFill](/docs/plugins/removeUselessStrokeAndFill/)
-- [removeViewBox](/docs/plugins/removeViewBox/)
 - [cleanupEnableBackground](/docs/plugins/cleanupEnableBackground/)
 - [removeHiddenElems](/docs/plugins/removeHiddenElems/)
 - [removeEmptyText](/docs/plugins/removeEmptyText/)
@@ -47,7 +46,6 @@ The following plugins are included in `preset-default`, in the order that they'r
 - [mergePaths](/docs/plugins/mergePaths/)
 - [sortAttrs](/docs/plugins/sortAttrs/)
 - [sortDefsChildren](/docs/plugins/sortDefsChildren/)
-- [removeTitle](/docs/plugins/removeTitle/)
 - [removeDesc](/docs/plugins/removeDesc/)
 
 ## Disable a Plugin
@@ -63,7 +61,7 @@ module.exports = {
       name: 'preset-default',
       params: {
         overrides: {
-          removeViewBox: false,
+          cleanupIds: false,
         },
       },
     },
@@ -71,7 +69,7 @@ module.exports = {
 };
 ```
 
-Alternatively, you can also drop `preset-default` entirely, and configure your own plugin pipeline from scratch, with only the desirable plugins:
+Alternatively, you can drop `preset-default` entirely, and configure your own plugin pipeline from scratch, with only the desirable plugins:
 
 ```js
 module.exports = {

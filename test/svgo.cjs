@@ -1,5 +1,11 @@
-const { loadConfig, optimize } = require('../dist/svgo-node.cjs');
 const assert = require('assert');
+const {
+  VERSION,
+  optimize,
+  builtinPlugins,
+  loadConfig,
+} = require('../dist/svgo-node.cjs');
+const PKG = require('../package.json');
 
 const fixture = `<svg xmlns="http://www.w3.org/2000/svg">
     <g attr1="val1">
@@ -27,7 +33,9 @@ const runTest = () => {
   });
   const actual = result.data;
 
+  assert.strictEqual(VERSION, PKG.version);
   assert.equal(actual, expected);
+  assert.notEqual(builtinPlugins, undefined);
   assert.notEqual(loadConfig, undefined);
 };
 

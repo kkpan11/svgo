@@ -180,7 +180,6 @@ type DefaultPlugins = {
   };
   removeMetadata: void;
   removeNonInheritableGroupAttrs: void;
-  removeTitle: void;
   removeUnknownsAndDefaults: {
     unknownContent?: boolean;
     unknownAttrs?: boolean;
@@ -203,7 +202,6 @@ type DefaultPlugins = {
     fill?: boolean;
     removeNone?: boolean;
   };
-  removeViewBox: void;
   removeXMLProcInst: void;
   sortAttrs: {
     order?: string[];
@@ -251,8 +249,10 @@ export type BuiltinsWithOptionalParams = DefaultPlugins & {
   removeDimensions: void;
   removeOffCanvasPaths: void;
   removeRasterImages: void;
-  removeScriptElement: void;
+  removeScripts: void;
   removeStyleElement: void;
+  removeTitle: void;
+  removeViewBox: void;
   removeXlink: {
     /**
      * By default this plugin ignores legacy elements that were deprecated or
@@ -290,7 +290,8 @@ export type BuiltinsWithRequiredParams = {
   };
 };
 
-type PluginsParams = BuiltinsWithOptionalParams & BuiltinsWithRequiredParams;
+export type PluginsParams = BuiltinsWithOptionalParams &
+  BuiltinsWithRequiredParams;
 
 export type Plugin<Name extends keyof PluginsParams> = PluginDef<
   PluginsParams[Name]

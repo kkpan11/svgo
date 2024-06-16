@@ -2,6 +2,7 @@ import type { StringifyOptions, DataUri, Plugin } from './types.js';
 import type {
   BuiltinsWithOptionalParams,
   BuiltinsWithRequiredParams,
+  PluginsParams,
 } from '../plugins/plugins-types.js';
 
 type CustomPlugin<T = any> = {
@@ -25,6 +26,36 @@ type PluginConfig =
       };
     }[keyof BuiltinsWithRequiredParams]
   | CustomPlugin;
+
+type BuiltinPlugin<Name, Params> = {
+  /** Name of the plugin, also known as the plugin ID. */
+  name: Name;
+  description?: string;
+  fn: Plugin<Params>;
+};
+
+type BuiltinPluginOrPreset<Name, Params> = BuiltinPlugin<Name, Params> & {
+  /** If the plugin is itself a preset that invokes other plugins. */
+  isPreset: true | undefined;
+  /**
+   * If the plugin is a preset that invokes other plugins, this returns an
+   * array of the plugins in the preset in the order that they are invoked.
+   */
+  plugins?: Readonly<BuiltinPlugin<string, Object>[]>;
+};
+
+/**
+ * Plugins that are bundled with SVGO. This includes plugin presets, and plugins
+ * that are not enabled by default.
+ */
+export declare const builtinPlugins: Array<
+  {
+    [Name in keyof PluginsParams]: BuiltinPluginOrPreset<
+      Name,
+      PluginsParams[Name]
+    >;
+  }[keyof PluginsParams]
+>;
 
 export type Config = {
   /** Can be used by plugins, for example prefixids */
@@ -51,6 +82,9 @@ export type Config = {
 type Output = {
   data: string;
 };
+
+/** Installed version of SVGO. */
+export declare const VERSION: string;
 
 /** The core of SVGO */
 export declare function optimize(input: string, config?: Config): Output;
